@@ -446,16 +446,6 @@ export class AlbumDetail {
    * @param {Photo} photo - Photo to add
    */
   addPhoto(photo) {
-    this.photos.push(photo)
-    this.currentAlbum.photoCount++
-
-    // Update header
-    const title = querySelector('#album-detail-title', this.container)
-    const stats = querySelector('.album-stats', this.container)
-    if (title) title.textContent = this.currentAlbum.name
-    if (stats) stats.textContent = `${this.currentAlbum.photoCount} photo${this.currentAlbum.photoCount !== 1 ? 's' : ''}`
-
-    // Update grid
     const grid = querySelector('#photo-grid', this.container)
     if (grid) {
       // Remove empty state if present
