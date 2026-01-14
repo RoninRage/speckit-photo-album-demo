@@ -115,11 +115,11 @@ Users need the application to work seamlessly across mobile, tablet, and desktop
 
 ### Edge Cases
 
-- What happens when the browser's local storage is full or nearly full?
-- How does the system handle if a user attempts to upload a file that is not JPEG, PNG, or WebP?
-- What happens if the user opens the app across multiple browser tabs simultaneously?
-- How does the system handle rapid consecutive operations (e.g., quickly uploading many photos)?
-- What happens if the user's browser data is cleared or local storage is disabled?
+- What happens when the browser's local storage is full or nearly full? (System prevents new uploads and displays a clear message suggesting the user delete photos or clear old albums to make space)
+- How does the system handle if a user attempts to upload a file that is not JPEG, PNG, or WebP? (System shows an error message explaining the failure, rejects the file, and keeps the upload dialog open for retry)
+- What happens if the user opens the app across multiple browser tabs simultaneously? (Each tab is independent with no synchronization; changes in one tab are not visible in other tabs until manually refreshed)
+- How does the system handle rapid consecutive operations (e.g., quickly uploading many photos)? (Not specified in clarifications; deferred to implementation)
+- What happens if the user's browser data is cleared or local storage is disabled? (Not specified in clarifications; deferred to implementation)
 
 ## Requirements *(mandatory)*
 
@@ -136,6 +136,14 @@ Users need the application to work seamlessly across mobile, tablet, and desktop
 **Photo Management**
 
 - **FR-006**: System MUST accept and store photo uploads in JPEG, PNG, and WebP formats
+- **FR-006a**: System MUST display a clear error message (toast/alert) when a user selects an invalid file format; the upload dialog remains open for retry attempts
+- **FR-006b**: System MUST validate file format before processing and provide specific feedback about why a file was rejected
+
+**Storage Management**
+
+- **FR-020**: System MUST monitor available local storage quota and prevent photo uploads when quota is full or cannot accommodate the upload
+- **FR-021**: System MUST display a clear message when storage is full, informing users that they need to delete photos or albums to free space
+- **FR-022**: System MUST provide users with visibility into how much storage they are using (as a percentage of available quota)
 - **FR-007**: System MUST display uploaded photos as thumbnail previews in an album's grid layout
 - **FR-008**: System MUST allow users to delete individual photos with a confirmation dialog
 - **FR-009**: System MUST allow users to reorder photos within an album by dragging and dropping
@@ -146,6 +154,7 @@ Users need the application to work seamlessly across mobile, tablet, and desktop
 
 - **FR-012**: System MUST persist all album and photo data in browser local storage without any server communication
 - **FR-013**: System MUST restore all persisted data when the user returns to the application in the same browser
+- **FR-013a**: System MUST support independent sessions across multiple browser tabs; changes in one tab do not automatically reflect in other tabs without manual refresh
 - **FR-014**: System MUST not require user authentication or registration
 - **FR-015**: System MUST not send any photo data to external services or servers
 
@@ -159,8 +168,18 @@ Users need the application to work seamlessly across mobile, tablet, and desktop
 ### Key Entities
 
 - **Album**: Represents a collection of photos. Attributes include: unique identifier, name (user-provided), creation date, list of photo references, photo count
-- **Photo**: Represents a single image file stored in an album. Attributes include: unique identifier, file data (binary), file format (JPEG/PNG/WebP), creation date, display order within album
+- **Photo**: Represents a single image file stored in an album. Attributes include: unique identifier (UUID or timestamp-based), file data (binary), file format (JPEG/PNG/WebP), creation date, display order within album. Each photo maintains its identity when moved between albums—moving a photo to a different album does not create a duplicate but transfers the original photo instance.
 - **Application State**: Represents the complete collection of albums and photos. Stored entirely in browser local storage, no server-side persistence
+
+## Clarifications
+
+### Session 2026-01-14
+
+- Q: How should the system ensure each photo maintains a unique identity when moved between albums? → A: Each photo gets a unique ID (UUID/timestamp) regardless of content; moving photos preserves their original ID in the target album
+- Q: How should the system handle user actions when file uploads fail or invalid files are selected? → A: Show an error message (toast/alert) explaining the failure; reject the file and keep the upload dialog open for retry
+- Q: What level of observability and monitoring does the application need for troubleshooting user issues? → A: No logging or monitoring; application is simple enough that issues can be debugged by user steps alone
+- Q: When a user opens the application in multiple browser tabs simultaneously, how should concurrent operations be handled? → A: Each tab is independent with no synchronization; changes in one tab are not visible in other tabs until they are manually refreshed
+- Q: How should the system handle the scenario when the browser's local storage quota is full or nearly full? → A: Prevent new uploads with a message like "Storage is full"; suggest the user delete photos or clear old albums to make space
 
 ## Assumptions
 
