@@ -174,7 +174,7 @@ export class App {
       this.state.albums.unshift(album)
       this.state.photos[album.id] = []
 
-      this.components.albumList.addAlbum(album)
+      this.components.albumList.render(this.state.albums)
       this.showSuccess(SUCCESS_MESSAGES.ALBUM_CREATED)
     } catch (error) {
       console.error('Failed to create album:', error)

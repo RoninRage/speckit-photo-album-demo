@@ -463,14 +463,8 @@ export class AlbumList {
     const album = this.albums.find(a => a.id === albumId)
     if (!album) return
 
-    const message = album.photoCount > 0
-      ? `Delete album "${album.name}" and its ${album.photoCount} photo(s)?`
-      : `Delete album "${album.name}"?`
-
-    if (confirm(message)) {
-      if (this.listeners.onDeleteAlbum) {
-        this.listeners.onDeleteAlbum(albumId)
-      }
+    if (this.listeners.onDeleteAlbum) {
+      this.listeners.onDeleteAlbum(albumId)
     }
   }
 
