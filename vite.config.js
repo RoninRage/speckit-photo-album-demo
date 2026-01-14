@@ -1,15 +1,12 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  root: '.',
+  root: 'src',
   build: {
-    outDir: 'dist',
+    outDir: '../dist',
     assetsDir: 'assets',
     minify: 'terser',
-    sourcemap: false,
-    rollupOptions: {
-      input: 'src/index.html'
-    }
+    sourcemap: false
   },
   server: {
     port: 5173,
