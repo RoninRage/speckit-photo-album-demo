@@ -1,50 +1,49 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Project Constitution - Photo Album App
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### 1. Simplicity First
+- Use vanilla JavaScript (ES6 modules, no frameworks)
+- HTML5 semantic elements, CSS3 (Grid, Flexbox)
+- Minimize external dependencies (only what we need)
+- Clear, self-documenting code
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### 2. Code Quality Standards
+- Descriptive variable and function names
+- Single Responsibility Principle
+- DRY (Don't Repeat Yourself)
+- No magic numbers or strings
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### 3. Testing Requirements
+- Unit tests for Album and Photo models
+- E2E tests for critical user flows (create album, add photo, drag-drop)
+- Tests before implementation (TDD approach)
+- Minimum 80% code coverage for core logic
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### 4. User Experience
+- Mobile-first: 320px minimum width
+- Responsive breakpoints: 480px, 768px, 1024px
+- Keyboard navigation support
+- Focus indicators visible for accessibility
+- Loading states for async operations
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### 5. Performance Targets
+- Initial page load < 1000ms (includes IndexedDB init)
+- Image tile render < 100ms (even with 100+ photos)
+- Drag-drop response < 50ms (no lag)
+- Bundle size < 50KB (gzipped)
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### 6. Storage & Data
+- Client-side only (no backend)
+- IndexedDB browser API (native, no library)
+- Auto-save on every action
+- Persist between sessions
+- Handle quota exceeded gracefully
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+## Decision Rationale
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
-
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
-
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+These principles ensure:
+- Fast development without framework overhead
+- Quality code maintainable by small teams
+- Reliable user experience
+- Privacy (data stays on user's device)
