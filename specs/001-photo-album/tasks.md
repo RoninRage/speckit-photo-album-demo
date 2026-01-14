@@ -204,7 +204,7 @@ This document breaks down the Photo Album feature into granular, executable task
 - [x] T107 [US3] Write test: Photo position updates on drag-drop
 - [x] T108 [US3] Write test: Positions remain sequential (0, 1, 2) after reorder
 - [x] T109 [US3] Write test: Reorder persists across page reload
-- [ ] T110 [US3] Write E2E test: Drag photo, verify new order persists (`tests/e2e/reorder-photos.spec.js`)
+- [x] T110 [US3] Write E2E test: Drag photo, verify new order persists (`tests/e2e/reorder-photos.spec.js`)
 
 ---
 
@@ -234,7 +234,7 @@ This document breaks down the Photo Album feature into granular, executable task
 - [x] T121 [US4] Write test: Photo moves between albums with correct albumId update
 - [x] T122 [US4] Write test: Photo counts update for both source and target albums
 - [x] T123 [US4] Write test: Source album positions reorder after move
-- [ ] T124 [US4] Write E2E test: Drag photo between albums (`tests/e2e/move-photos.spec.js`)
+- [x] T124 [US4] Write E2E test: Drag photo between albums (`tests/e2e/move-photos.spec.js`)
 
 ---
 
@@ -263,7 +263,7 @@ This document breaks down the Photo Album feature into granular, executable task
 - [x] T135 [US5] Write test: Confirmation modal prevents deletion on cancel
 - [x] T136 [US5] Write test: Album deletion prevented for non-empty albums
 - [x] T137 [US5] Write test: Positions reorder after photo deletion
-- [ ] T138 [US5] Write E2E test: Delete photo with confirmation (`tests/e2e/delete-photo.spec.js`)
+- [x] T138 [US5] Write E2E test: Delete photo with confirmation (`tests/e2e/delete-photo.spec.js`)
 
 ---
 
