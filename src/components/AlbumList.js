@@ -344,12 +344,13 @@ export class AlbumList {
     // Album card clicks (delegate)
     const albumList = querySelector('#album-list', this.container)
     if (albumList) {
-      const cleanup = delegate(albumList, '.album-card', 'click', (e) => {
-        const albumEl = e.closest('.album-item')
+      const self = this
+      const cleanup = delegate(albumList, '.album-card', 'click', function(e) {
+        const albumEl = this.closest('.album-item')
         if (albumEl) {
           const albumId = albumEl.dataset.album
-          if (this.listeners.onAlbumSelected) {
-            this.listeners.onAlbumSelected(albumId)
+          if (self.listeners.onAlbumSelected) {
+            self.listeners.onAlbumSelected(albumId)
           }
         }
       })
@@ -358,12 +359,13 @@ export class AlbumList {
 
     // Delete album buttons (delegate)
     if (albumList) {
-      const cleanup = delegate(albumList, '.album-delete-btn', 'click', (e) => {
+      const self = this
+      const cleanup = delegate(albumList, '.album-delete-btn', 'click', function(e) {
         e.stopPropagation()
-        const albumEl = e.closest('.album-item')
+        const albumEl = this.closest('.album-item')
         if (albumEl) {
           const albumId = albumEl.dataset.album
-          this.handleDeleteAlbum(albumId)
+          self.handleDeleteAlbum(albumId)
         }
       })
       this.cleanupFunctions.push(cleanup)
