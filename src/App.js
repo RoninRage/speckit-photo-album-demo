@@ -133,6 +133,10 @@ export class App {
       this.components.albumDetail.onUploadPhoto((files) => {
         this.uploadPhotos(albumId, files)
       })
+
+      this.components.albumDetail.onPhotoReorder((photoId, newPosition) => {
+        this.reorderPhotos(albumId, photoId, newPosition)
+      })
     } catch (error) {
       console.error('Failed to render album detail:', error)
       this.showError('Failed to load album')
@@ -264,6 +268,79 @@ export class App {
     } catch (error) {
       console.error('Failed to upload photos:', error)
       this.showError(error.message || ERROR_MESSAGES.STORAGE_ERROR)
+    }
+  }
+
+  /**
+   * Reorder photos within an album
+   * @private
+   * @param {string} albumId - Album ID
+   * @param {string} photoId - Photo ID being moved
+   * @param {number} newPosition - New position (0-based index)
+   */
+  async reorderPhotos(albumId, photoId, newPosition) {
+    try {
+      const photos = this.state.photos[albumId]
+      if (!photos) {
+        throw new Error('No photos found for album')
+      }
+
+      // Find current photo and position
+      const photoIndex = photos.findIndex(p => p.id === photoId)
+      if (photoIndex === -1) {
+        throw new Error('Photo not found')
+      }
+
+      const currentPosition = photos[photoIndex].position
+
+      // Don't reorder if dropping in same position
+      if (currentPosition === newPosition) {
+        return
+      }
+
+      // Calculate position updates for affected photos
+      const moves = []
+
+      if (currentPosition < newPosition) {
+        // Moving forward: shift photos between old and new position backward
+        for (let i = currentPosition + 1; i <= newPosition; i++) {
+          const photo = photos.find(p => p.position === i)
+          if (photo) {
+            moves.push({ photoId: photo.id, newPosition: i - 1 })
+          }
+        }
+      } else {
+        // Moving backward: shift photos between new and old position forward
+        for (let i = newPosition; i < currentPosition; i++) {
+          const photo = photos.find(p => p.position === i)
+          if (photo) {
+            moves.push({ photoId: photo.id, newPosition: i + 1 })
+          }
+        }
+      }
+
+      // Add the dragged photo's new position
+      moves.push({ photoId, newPosition })
+
+      // Update storage with atomic transaction
+      await storageService.reorderPhotos(albumId, moves)
+
+      // Update local state
+      moves.forEach(move => {
+        const photo = photos.find(p => p.id === move.photoId)
+        if (photo) {
+          photo.position = move.newPosition
+        }
+      })
+
+      // Sort photos by position
+      photos.sort((a, b) => a.position - b.position)
+
+      // Update UI
+      this.components.albumDetail.updatePhotoOrder(photos)
+    } catch (error) {
+      console.error('Failed to reorder photos:', error)
+      this.showError('Failed to reorder photos')
     }
   }
 

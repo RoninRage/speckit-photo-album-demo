@@ -52,16 +52,16 @@ This document breaks down the Photo Album feature into granular, executable task
 - [x] T016 Create base test files structure (`tests/unit/`, `tests/e2e/`)
 - [x] T017 [P] Create `tests/unit/Album.test.js` test template
 - [x] T018 [P] Create `tests/unit/Photo.test.js` test template
-- [ ] T019 [P] Create `tests/unit/StorageService.test.js` test template
+- [x] T019 [P] Create `tests/unit/StorageService.test.js` test template
 - [x] T020 Create `tests/e2e/create-album.spec.js` E2E template
-- [ ] T021 Create `tests/e2e/upload-photo.spec.js` E2E template
+- [x] T021 Create `tests/e2e/upload-photo.spec.js` E2E template
 
 ### Setup Development Environment
 
 - [x] T022 Run `npm install` to install all dependencies
-- [ ] T023 Verify `npm run dev` starts development server on http://localhost:5173
+- [x] T023 Verify `npm run dev` starts development server on http://localhost:5173
 - [x] T024 Verify `npm run test:unit` runs Jest with watch mode
-- [ ] T025 Verify `npm run test:e2e` runs Playwright tests
+- [x] T025 Verify `npm run test:e2e` runs Playwright tests
 - [x] T026 Document development workflow in comment at top of `src/main.js`
 
 ---
@@ -72,14 +72,14 @@ This document breaks down the Photo Album feature into granular, executable task
 
 #### Data Model & Storage
 
-- [ ] T027 [P] [US1] Implement Album.js: constructor, validation, properties (id, name, createdAt, photoCount)
-- [ ] T028 [P] [US1] Write unit tests for Album class in `tests/unit/Album.test.js`
-- [ ] T029 [US1] Implement StorageService.createAlbum(name) → creates album, returns Album instance
-- [ ] T030 [US1] Implement StorageService.getAllAlbums() → returns all albums sorted by createdAt (newest first)
-- [ ] T031 [US1] Implement StorageService.updateAlbum(album) → updates album record in IndexedDB
-- [ ] T032 [US1] Implement StorageService.deleteAlbum(albumId) → deletes album (only if empty)
-- [ ] T033 [US1] Write unit tests for StorageService album operations in `tests/unit/StorageService.test.js`
-- [ ] T034 [US1] Implement StorageService.init() → initializes IndexedDB connection, creates object stores
+- [x] T027 [P] [US1] Implement Album.js: constructor, validation, properties (id, name, createdAt, photoCount)
+- [x] T028 [P] [US1] Write unit tests for Album class in `tests/unit/Album.test.js`
+- [x] T029 [US1] Implement StorageService.createAlbum(name) → creates album, returns Album instance
+- [x] T030 [US1] Implement StorageService.getAllAlbums() → returns all albums sorted by createdAt (newest first)
+- [x] T031 [US1] Implement StorageService.updateAlbum(album) → updates album record in IndexedDB
+- [x] T032 [US1] Implement StorageService.deleteAlbum(albumId) → deletes album (only if empty)
+- [x] T033 [US1] Write unit tests for StorageService album operations in `tests/unit/StorageService.test.js`
+- [x] T034 [US1] Implement StorageService.init() → initializes IndexedDB connection, creates object stores
 
 #### UI Components
 
@@ -118,52 +118,52 @@ This document breaks down the Photo Album feature into granular, executable task
 
 #### Data Model & Storage
 
-- [ ] T057 [P] [US2] Implement Photo.js: constructor, validation, properties (id, albumId, name, dataUrl, format, position, createdAt)
-- [ ] T058 [P] [US2] Write unit tests for Photo class in `tests/unit/Photo.test.js`
-- [ ] T059 [US2] Implement StorageService.createPhoto(albumId, file, dataUrl) → creates photo, updates album count
-- [ ] T060 [US2] Implement StorageService.getPhotosByAlbum(albumId) → returns photos ordered by position
-- [ ] T061 [US2] Implement StorageService.deletePhoto(photoId) → deletes photo, reorders siblings
-- [ ] T062 [US2] Create IndexedDB indexes: (albumId), (albumId, position) for efficient queries
-- [ ] T063 [US2] Write unit tests for StorageService photo operations in `tests/unit/StorageService.test.js`
+- [x] T057 [P] [US2] Implement Photo.js: constructor, validation, properties (id, albumId, name, dataUrl, format, position, createdAt)
+- [x] T058 [P] [US2] Write unit tests for Photo class in `tests/unit/Photo.test.js`
+- [x] T059 [US2] Implement StorageService.createPhoto(albumId, file, dataUrl) → creates photo, updates album count
+- [x] T060 [US2] Implement StorageService.getPhotosByAlbum(albumId) → returns photos ordered by position
+- [x] T061 [US2] Implement StorageService.deletePhoto(photoId) → deletes photo, reorders siblings
+- [x] T062 [US2] Create IndexedDB indexes: (albumId), (albumId, position) for efficient queries
+- [x] T063 [US2] Write unit tests for StorageService photo operations in `tests/unit/StorageService.test.js`
 
 #### File Upload & Validation Service
 
-- [ ] T064 [P] [US2] Create `src/services/FileService.js` with validation constants (ACCEPTED_FORMATS, MAX_FILE_SIZE)
-- [ ] T065 [US2] Implement FileService.validateFile(file) → checks format and size
-- [ ] T066 [US2] Implement FileService.fileToDataUrl(file) → converts File to base64 data URL
-- [ ] T067 [US2] Implement FileService.validateDataUrl(dataUrl) → verifies valid base64 image
-- [ ] T068 [US2] Implement FileService.extractFormat(file) → extracts format from MIME type
-- [ ] T069 [P] [US2] Write unit tests for FileService in dedicated test file
+- [x] T064 [P] [US2] Create `src/services/FileService.js` with validation constants (ACCEPTED_FORMATS, MAX_FILE_SIZE)
+- [x] T065 [US2] Implement FileService.validateFile(file) → checks format and size
+- [x] T066 [US2] Implement FileService.fileToDataUrl(file) → converts File to base64 data URL
+- [x] T067 [US2] Implement FileService.validateDataUrl(dataUrl) → verifies valid base64 image
+- [x] T068 [US2] Implement FileService.extractFormat(file) → extracts format from MIME type
+- [x] T069 [P] [US2] Write unit tests for FileService in dedicated test file
 
 #### UI Components for Upload
 
-- [ ] T070 [P] [US2] Update AlbumDetail with upload button and file input element in `src/components/AlbumDetail.js`
-- [ ] T071 [US2] Implement AlbumDetail.onUploadPhoto(callback) → subscribe to file selection events
-- [ ] T072 [US2] Create drag-and-drop zone in AlbumDetail for alternative upload method
-- [ ] T073 [US2] Add file input with accept=".jpg,.jpeg,.png,.webp" attribute
-- [ ] T074 [P] [US2] Create `src/components/PhotoGrid.js` class to display photos in responsive grid
-- [ ] T075 [US2] Implement PhotoGrid.render(photos, dataUrls) → display photos as square tiles
-- [ ] T076 [US2] Implement PhotoGrid.addPhoto(photo, dataUrl) → add new photo tile to grid
-- [ ] T077 [US2] Implement PhotoGrid.removePhoto(photoId) → remove photo tile
-- [ ] T078 [US2] Create responsive CSS grid: 1 col (320px), 2-3 cols (768px), 4+ cols (1024px)
-- [ ] T079 [US2] Implement photo thumbnail lazy-loading via Intersection Observer API
-- [ ] T080 [US2] Add loading state visual indicator while photo is processing
+- [x] T070 [P] [US2] Update AlbumDetail with upload button and file input element in `src/components/AlbumDetail.js`
+- [x] T071 [US2] Implement AlbumDetail.onUploadPhoto(callback) → subscribe to file selection events
+- [x] T072 [US2] Create drag-and-drop zone in AlbumDetail for alternative upload method
+- [x] T073 [US2] Add file input with accept=".jpg,.jpeg,.png,.webp" attribute
+- [x] T074 [P] [US2] Create `src/components/PhotoGrid.js` class to display photos in responsive grid
+- [x] T075 [US2] Implement PhotoGrid.render(photos, dataUrls) → display photos as square tiles
+- [x] T076 [US2] Implement PhotoGrid.addPhoto(photo, dataUrl) → add new photo tile to grid
+- [x] T077 [US2] Implement PhotoGrid.removePhoto(photoId) → remove photo tile
+- [x] T078 [US2] Create responsive CSS grid: 1 col (320px), 2-3 cols (768px), 4+ cols (1024px)
+- [x] T079 [US2] Implement photo thumbnail lazy-loading via Intersection Observer API
+- [x] T080 [US2] Add loading state visual indicator while photo is processing
 
 #### Application Logic for Upload
 
-- [ ] T081 [US2] Implement upload flow: file selected → validate → convert to data URL → save to storage
-- [ ] T082 [US2] Implement error handling for invalid files (show toast/alert, keep dialog open)
-- [ ] T083 [US2] Implement album photo count update after successful upload
-- [ ] T084 [US2] Implement photo grid refresh after each upload
-- [ ] T085 [US2] Implement storage quota check before upload (show message if full)
+- [x] T081 [US2] Implement upload flow: file selected → validate → convert to data URL → save to storage
+- [x] T082 [US2] Implement error handling for invalid files (show toast/alert, keep dialog open)
+- [x] T083 [US2] Implement album photo count update after successful upload
+- [x] T084 [US2] Implement photo grid refresh after each upload
+- [x] T085 [US2] Implement storage quota check before upload (show message if full)
 
 #### Testing - US2
 
-- [ ] T086 [US2] Write test: Photo created with valid JPEG file
-- [ ] T087 [US2] Write test: Photo creation rejects invalid file format
-- [ ] T088 [US2] Write test: FileService validates base64 data URLs
-- [ ] T089 [US2] Write test: Photo count increments after upload
-- [ ] T090 [US2] Write E2E test: Upload photo and verify it appears in grid (`tests/e2e/upload-photo.spec.js`)
+- [x] T086 [US2] Write test: Photo created with valid JPEG file
+- [x] T087 [US2] Write test: Photo creation rejects invalid file format
+- [x] T088 [US2] Write test: FileService validates base64 data URLs
+- [x] T089 [US2] Write test: Photo count increments after upload
+- [x] T090 [US2] Write E2E test: Upload photo and verify it appears in grid (`tests/e2e/upload-photo.spec.js`)
 
 ---
 
@@ -173,31 +173,31 @@ This document breaks down the Photo Album feature into granular, executable task
 
 #### Drag-Drop Service
 
-- [ ] T091 [P] [US3] Create `src/services/DragDropService.js` with drag-drop event handlers
-- [ ] T092 [P] [US3] Implement DragDropService.onDragStart(callback) → capture photo being dragged
-- [ ] T093 [US3] Implement DragDropService.onDragOver(callback) → visual feedback (highlight drop area)
-- [ ] T094 [US3] Implement DragDropService.onDrop(callback) → handle drop event with position data
+- [x] T091 [P] [US3] Create `src/services/DragDropService.js` with drag-drop event handlers
+- [x] T092 [P] [US3] Implement DragDropService.onDragStart(callback) → capture photo being dragged
+- [x] T093 [US3] Implement DragDropService.onDragOver(callback) → visual feedback (highlight drop area)
+- [x] T094 [US3] Implement DragDropService.onDrop(callback) → handle drop event with position data
 
 #### Data Model for Reordering
 
-- [ ] T095 [US3] Implement StorageService.reorderPhotos(albumId, photos) → atomic transaction updating positions
-- [ ] T096 [US3] Implement position update logic: preserve gaps-free sequence (0, 1, 2, ...)
+- [x] T095 [US3] Implement StorageService.reorderPhotos(albumId, photos) → atomic transaction updating positions
+- [x] T096 [US3] Implement position update logic: preserve gaps-free sequence (0, 1, 2, ...)
 
 #### UI Components for Drag-Drop
 
-- [ ] T097 [P] [US3] Update PhotoGrid.js with drag-drop event listeners
-- [ ] T098 [US3] Implement PhotoGrid.onDragStart(callback) → subscribe to drag start on photo tiles
-- [ ] T099 [US3] Implement PhotoGrid.onDropPhoto(callback) → subscribe to drop within grid
-- [ ] T100 [US3] Implement PhotoGrid.updatePhotoOrder(photos) → reorder tiles in grid
-- [ ] T101 [US3] Implement PhotoGrid.setDragOverState(isOver) → visual feedback during drag
-- [ ] T102 [US3] Add CSS for drag-over state (border highlight, background color)
+- [x] T097 [P] [US3] Update PhotoGrid.js with drag-drop event listeners
+- [x] T098 [US3] Implement PhotoGrid.onDragStart(callback) → subscribe to drag start on photo tiles
+- [x] T099 [US3] Implement PhotoGrid.onDropPhoto(callback) → subscribe to drop within grid
+- [x] T100 [US3] Implement PhotoGrid.updatePhotoOrder(photos) → reorder tiles in grid
+- [x] T101 [US3] Implement PhotoGrid.setDragOverState(isOver) → visual feedback during drag
+- [x] T102 [US3] Add CSS for drag-over state (border highlight, background color)
 - [ ] T103 [US3] Implement debounce on drag-drop events (max frequency 50ms)
 
 #### Application Logic for Reordering
 
-- [ ] T104 [US3] Implement reorder flow: drag within album → calculate new position → save → refresh grid
-- [ ] T105 [US3] Implement position calculation: map drop target to position in grid
-- [ ] T106 [US3] Implement IndexedDB transaction for atomic position updates
+- [x] T104 [US3] Implement reorder flow: drag within album → calculate new position → save → refresh grid
+- [x] T105 [US3] Implement position calculation: map drop target to position in grid
+- [x] T106 [US3] Implement IndexedDB transaction for atomic position updates
 
 #### Testing - US3
 

@@ -4,6 +4,7 @@
  */
 import { createElement, querySelector, clearChildren, addClass, removeClass } from '../utils/dom.js'
 import { on } from '../utils/events.js'
+import { DragDropService } from '../services/DragDropService.js'
 
 export class AlbumDetail {
   constructor() {
@@ -13,9 +14,12 @@ export class AlbumDetail {
     this.listeners = {
       onBack: null,
       onUploadPhoto: null,
-      onPhotoSelected: null
+      onPhotoSelected: null,
+      onPhotoReorder: null
     }
     this.cleanupFunctions = []
+    this.dragDropService = new DragDropService()
+    this.draggedPhotoId = null
   }
 
   /**
@@ -204,7 +208,9 @@ export class AlbumDetail {
       className: 'photo-item',
       attributes: {
         'data-photo': photo.id,
+        'data-position': photo.position,
         'data-test-id': `photo-${photo.id}`,
+        draggable: 'true',
         role: 'button',
         tabindex: '0',
         'aria-label': photo.name
@@ -299,6 +305,60 @@ export class AlbumDetail {
       })
       this.cleanupFunctions.push(cleanup5)
     }
+
+    // Setup photo drag-drop for reordering
+    this.setupPhotoDragDrop()
+  }
+
+  /**
+   * Setup photo drag-drop functionality
+   * @private
+   */
+  setupPhotoDragDrop() {
+    const grid = querySelector('#photo-grid', this.container)
+    if (!grid) return
+
+    // Make grid a drop zone
+    const gridCleanup = this.dragDropService.makeDropZone(grid, {
+      dropClass: 'grid-drag-over',
+      onDrop: (e) => {
+        if (!this.draggedPhotoId || !this.listeners.onPhotoReorder) return
+
+        // Find drop target photo
+        const targetEl = e.target.closest('.photo-item')
+        if (!targetEl) return
+
+        const targetPhotoId = targetEl.dataset.photo
+        const targetPosition = parseInt(targetEl.dataset.position, 10)
+
+        if (targetPhotoId && targetPhotoId !== this.draggedPhotoId) {
+          // Call reorder handler
+          this.listeners.onPhotoReorder(this.draggedPhotoId, targetPosition)
+        }
+
+        this.draggedPhotoId = null
+      }
+    })
+    this.cleanupFunctions.push(gridCleanup)
+
+    // Make each photo draggable
+    this.photos.forEach((photo) => {
+      const photoEl = querySelector(`[data-photo="${photo.id}"]`, grid)
+      if (!photoEl) return
+
+      const cleanup = this.dragDropService.makeDraggable(
+        photoEl,
+        { type: 'photo', id: photo.id, albumId: this.currentAlbum.id, position: photo.position },
+        (e, data) => {
+          this.draggedPhotoId = data.id
+          addClass(photoEl, 'dragging')
+        },
+        () => {
+          removeClass(photoEl, 'dragging')
+        }
+      )
+      this.cleanupFunctions.push(cleanup)
+    })
   }
 
   /**
@@ -323,6 +383,14 @@ export class AlbumDetail {
    */
   onPhotoSelected(callback) {
     this.listeners.onPhotoSelected = callback
+  }
+
+  /**
+   * Register photo reorder listener
+   * @param {Function} callback - Callback function (photoId, newPosition)
+   */
+  onPhotoReorder(callback) {
+    this.listeners.onPhotoReorder = callback
   }
 
   /**
@@ -351,7 +419,44 @@ export class AlbumDetail {
       // Add photo
       const photoEl = this.createPhotoElement(photo)
       grid.appendChild(photoEl)
+
+      // Setup drag-drop for new photo
+      const cleanup = this.dragDropService.makeDraggable(
+        photoEl,
+        { type: 'photo', id: photo.id, albumId: this.currentAlbum.id, position: photo.position },
+        () => {
+          this.draggedPhotoId = photo.id
+          addClass(photoEl, 'dragging')
+        },
+        () => {
+          removeClass(photoEl, 'dragging')
+        }
+      )
+      this.cleanupFunctions.push(cleanup)
     }
+  }
+
+  /**
+   * Update photo grid order
+   * @param {Photo[]} photos - Reordered photos
+   */
+  updatePhotoOrder(photos) {
+    this.photos = photos
+
+    const grid = querySelector('#photo-grid', this.container)
+    if (!grid) return
+
+    // Clear grid
+    clearChildren(grid)
+
+    // Re-render photos in new order
+    photos.forEach((photo) => {
+      const photoEl = this.createPhotoElement(photo)
+      grid.appendChild(photoEl)
+    })
+
+    // Re-setup drag-drop
+    this.setupPhotoDragDrop()
   }
 
   /**
@@ -379,10 +484,12 @@ export class AlbumDetail {
   destroy() {
     this.cleanupFunctions.forEach(fn => fn())
     this.cleanupFunctions = []
+    this.draggedPhotoId = null
     this.listeners = {
       onBack: null,
       onUploadPhoto: null,
-      onPhotoSelected: null
+      onPhotoSelected: null,
+      onPhotoReorder: null
     }
   }
 }
