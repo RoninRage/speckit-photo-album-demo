@@ -312,13 +312,40 @@ export class StorageService {
 
       getRequest.onsuccess = () => {
         const photo = getRequest.result
-        if (photo) {
-          // Delete photo
-          photoStore.delete(photoId)
+        if (!photo) {
+          reject(new Error('Photo not found'))
+          return
+        }
+
+        const albumId = photo.albumId
+        const deletedPosition = photo.position
+
+        // Delete photo
+        photoStore.delete(photoId)
+
+        // Get all photos from the album to reorder them
+        const albumIndex = photoStore.index('albumId')
+        const albumPhotosRequest = albumIndex.getAll(albumId)
+
+        albumPhotosRequest.onsuccess = () => {
+          const albumPhotos = albumPhotosRequest.result
+
+          // Filter out deleted photo and reorder remaining ones
+          const remainingPhotos = albumPhotos
+            .filter(p => p.id !== photoId)
+            .sort((a, b) => a.position - b.position)
+
+          // Update positions for all remaining photos
+          remainingPhotos.forEach((p, index) => {
+            if (p.position !== index) {
+              p.position = index
+              photoStore.put(p)
+            }
+          })
 
           // Update album photo count
           const albumStore = tx.objectStore(STORE_ALBUMS)
-          const albumRequest = albumStore.get(photo.albumId)
+          const albumRequest = albumStore.get(albumId)
 
           albumRequest.onsuccess = () => {
             const album = albumRequest.result

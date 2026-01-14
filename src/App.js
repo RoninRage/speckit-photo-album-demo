@@ -4,6 +4,7 @@
  */
 import { AlbumList } from './components/AlbumList.js'
 import { AlbumDetail } from './components/AlbumDetail.js'
+import { DeleteConfirmationModal } from './components/DeleteConfirmationModal.js'
 import { storageService } from './services/StorageService.js'
 import { FileService } from './services/FileService.js'
 import { Toast } from './components/Toast.js'
@@ -21,7 +22,8 @@ export class App {
     this.components = {
       albumList: new AlbumList(),
       albumDetail: new AlbumDetail(),
-      toast: new Toast()
+      toast: new Toast(),
+      deleteModal: new DeleteConfirmationModal()
     }
   }
 
@@ -141,6 +143,10 @@ export class App {
       this.components.albumDetail.onPhotoMove((photoId, targetAlbumId) => {
         this.movePhotoToAlbum(albumId, photoId, targetAlbumId)
       })
+
+      this.components.albumDetail.onDeletePhoto((photoId, photoName) => {
+        this.deletePhoto(albumId, photoId, photoName)
+      })
     } catch (error) {
       console.error('Failed to render album detail:', error)
       this.showError('Failed to load album')
@@ -181,24 +187,41 @@ export class App {
    * @private
    * @param {string} albumId - Album ID
    */
-  async deleteAlbum(albumId) {
-    try {
-      const album = this.state.albums.find(a => a.id === albumId)
-      if (!album) {
-        throw new Error(ERROR_MESSAGES.ALBUM_NOT_FOUND)
-      }
-
-      await storageService.deleteAlbum(albumId)
-
-      this.state.albums = this.state.albums.filter(a => a.id !== albumId)
-      delete this.state.photos[albumId]
-
-      this.components.albumList.removeAlbum(albumId)
-      this.showSuccess(SUCCESS_MESSAGES.ALBUM_DELETED)
-    } catch (error) {
-      console.error('Failed to delete album:', error)
-      this.showError(error.message || ERROR_MESSAGES.STORAGE_ERROR)
+  deleteAlbum(albumId) {
+    const album = this.state.albums.find(a => a.id === albumId)
+    if (!album) {
+      this.showError(ERROR_MESSAGES.ALBUM_NOT_FOUND)
+      return
     }
+
+    // Prevent deletion of non-empty albums
+    if (album.photoCount > 0) {
+      this.showError('Cannot delete album with photos. Delete photos first.')
+      return
+    }
+
+    // Show confirmation modal
+    this.components.deleteModal.show({
+      itemType: 'album',
+      itemName: album.name,
+      onConfirm: async () => {
+        try {
+          await storageService.deleteAlbum(albumId)
+
+          this.state.albums = this.state.albums.filter(a => a.id !== albumId)
+          delete this.state.photos[albumId]
+
+          this.components.albumList.removeAlbum(albumId)
+          this.showSuccess(SUCCESS_MESSAGES.ALBUM_DELETED)
+        } catch (error) {
+          console.error('Failed to delete album:', error)
+          this.showError(error.message || ERROR_MESSAGES.STORAGE_ERROR)
+        }
+      },
+      onCancel: () => {
+        // Do nothing
+      }
+    })
   }
 
   /**
@@ -412,6 +435,67 @@ export class App {
       console.error('Failed to move photo:', error)
       this.showError('Failed to move photo')
     }
+  }
+
+  /**
+   * Delete a photo with confirmation
+   * @private
+   * @param {string} albumId - Album ID
+   * @param {string} photoId - Photo ID
+   * @param {string} photoName - Photo name for display
+   */
+  deletePhoto(albumId, photoId, photoName) {
+    // Show confirmation modal
+    this.components.deleteModal.show({
+      itemType: 'photo',
+      itemName: photoName,
+      onConfirm: async () => {
+        try {
+          // Delete from storage
+          await storageService.deletePhoto(photoId)
+
+          // Update local state
+          const photos = this.state.photos[albumId]
+          if (photos) {
+            const index = photos.findIndex(p => p.id === photoId)
+            if (index !== -1) {
+              photos.splice(index, 1)
+            }
+          }
+
+          // Update album photo count
+          const album = this.state.albums.find(a => a.id === albumId)
+          if (album) {
+            album.photoCount = Math.max(0, album.photoCount - 1)
+          }
+
+          // Update UI
+          if (this.state.currentView === 'detail') {
+            const photoEl = document.querySelector(`[data-photo="${photoId}"]`)
+            if (photoEl) {
+              photoEl.remove()
+            }
+
+            // Update header
+            this.components.albumDetail.updateAlbumInfo(album)
+
+            // Show empty state if no photos left
+            const grid = document.querySelector('#photo-grid')
+            if (grid && this.state.photos[albumId].length === 0) {
+              this.components.albumDetail.updatePhotoOrder([])
+            }
+          }
+
+          this.showSuccess('Photo deleted')
+        } catch (error) {
+          console.error('Failed to delete photo:', error)
+          this.showError('Failed to delete photo')
+        }
+      },
+      onCancel: () => {
+        // Do nothing
+      }
+    })
   }
 
   /**

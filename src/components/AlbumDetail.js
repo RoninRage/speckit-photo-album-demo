@@ -16,7 +16,8 @@ export class AlbumDetail {
       onUploadPhoto: null,
       onPhotoSelected: null,
       onPhotoReorder: null,
-      onPhotoMove: null
+      onPhotoMove: null,
+      onDeletePhoto: null
     }
     this.cleanupFunctions = []
     this.dragDropService = new DragDropService()
@@ -235,7 +236,18 @@ export class AlbumDetail {
       text: photo.name
     })
 
+    const deleteBtn = createElement('button', {
+      className: 'photo-delete-btn',
+      text: '✕',
+      attributes: {
+        'data-test-id': `delete-photo-${photo.id}`,
+        'aria-label': `Delete photo ${photo.name}`,
+        type: 'button'
+      }
+    })
+
     info.appendChild(name)
+    info.appendChild(deleteBtn)
     item.appendChild(img)
     item.appendChild(info)
 
@@ -366,6 +378,18 @@ export class AlbumDetail {
         }
       )
       this.cleanupFunctions.push(cleanup)
+
+      // Setup delete button for this photo
+      const deleteBtn = querySelector(`[data-test-id="delete-photo-${photo.id}"]`, photoEl)
+      if (deleteBtn) {
+        const deleteCleanup = on(deleteBtn, 'click', (e) => {
+          e.stopPropagation()
+          if (this.listeners.onDeletePhoto) {
+            this.listeners.onDeletePhoto(photo.id, photo.name)
+          }
+        })
+        this.cleanupFunctions.push(deleteCleanup)
+      }
     })
   }
 
@@ -407,6 +431,14 @@ export class AlbumDetail {
    */
   onPhotoMove(callback) {
     this.listeners.onPhotoMove = callback
+  }
+
+  /**
+   * Register photo delete listener
+   * @param {Function} callback - Callback function (photoId)
+   */
+  onDeletePhoto(callback) {
+    this.listeners.onDeletePhoto = callback
   }
 
   /**

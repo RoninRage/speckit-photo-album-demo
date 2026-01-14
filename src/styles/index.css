@@ -223,6 +223,70 @@ button:disabled {
   }
 }
 
+/* Modal Overlay (newer pattern for DeleteConfirmationModal, etc.) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-content {
+  background-color: var(--color-bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  padding: var(--space-6);
+  max-width: 500px;
+  width: 90%;
+  animation: slideUp var(--transition-base);
+}
+
+.modal-header {
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-4);
+}
+
+.modal-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+
+.modal-body {
+  margin-bottom: var(--space-6);
+}
+
+.modal-message {
+  margin: 0;
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+}
+
+.modal-footer {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+}
+
+.modal-footer .btn {
+  min-width: 100px;
+}
+
 #toast-container {
   position: fixed;
   bottom: var(--space-4);
@@ -667,6 +731,9 @@ button:disabled {
   background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
   padding: var(--space-3);
   color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
 .photo-name {
@@ -675,6 +742,38 @@ button:disabled {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  flex: 1;
+}
+
+.photo-delete-btn {
+  background-color: rgba(239, 68, 68, 0.8);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-lg);
+  padding: 0;
+  margin: 0;
+  margin-left: var(--space-2);
+  transition: background-color var(--transition-base);
+  opacity: 0;
+}
+
+.photo-item:hover .photo-delete-btn {
+  opacity: 1;
+}
+
+.photo-delete-btn:hover {
+  background-color: rgb(239, 68, 68);
+}
+
+.photo-delete-btn:active {
+  transform: scale(0.95);
 }
 
 /* Toast Component */

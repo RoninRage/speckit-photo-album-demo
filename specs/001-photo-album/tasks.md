@@ -244,25 +244,25 @@ This document breaks down the Photo Album feature into granular, executable task
 
 #### Delete Photo Logic
 
-- [ ] T125 [P] [US5] Create delete confirmation modal component in `src/components/DeleteConfirmationModal.js`
-- [ ] T126 [US5] Implement confirmation dialog for photo deletion
-- [ ] T127 [US5] Implement PhotoGrid with delete button on each photo tile
-- [ ] T128 [US5] Implement delete flow: click delete → show confirmation → confirm → delete → reorder
-- [ ] T129 [US5] Implement album photo count decrement after delete
+- [x] T125 [P] [US5] Create delete confirmation modal component in `src/components/DeleteConfirmationModal.js`
+- [x] T126 [US5] Implement confirmation dialog for photo deletion
+- [x] T127 [US5] Implement PhotoGrid with delete button on each photo tile
+- [x] T128 [US5] Implement delete flow: click delete → show confirmation → confirm → delete → reorder
+- [x] T129 [US5] Implement album photo count decrement after delete
 
 #### Delete Album Logic
 
-- [ ] T130 [P] [US5] Implement album deletion UI: only show delete for empty albums (disabled state for non-empty)
-- [ ] T131 [US5] Implement delete album flow: click delete → show confirmation → confirm → delete
-- [ ] T132 [US5] Implement validation: prevent deletion of non-empty albums
-- [ ] T133 [US5] Implement album list refresh after deletion
+- [x] T130 [P] [US5] Implement album deletion UI: only show delete for empty albums (disabled state for non-empty)
+- [x] T131 [US5] Implement delete album flow: click delete → show confirmation → confirm → delete
+- [x] T132 [US5] Implement validation: prevent deletion of non-empty albums
+- [x] T133 [US5] Implement album list refresh after deletion
 
 #### Testing - US5
 
-- [ ] T134 [US5] Write test: Photo deleted after confirmation, count decrements
-- [ ] T135 [US5] Write test: Confirmation modal prevents deletion on cancel
-- [ ] T136 [US5] Write test: Album deletion prevented for non-empty albums
-- [ ] T137 [US5] Write test: Positions reorder after photo deletion
+- [x] T134 [US5] Write test: Photo deleted after confirmation, count decrements
+- [x] T135 [US5] Write test: Confirmation modal prevents deletion on cancel
+- [x] T136 [US5] Write test: Album deletion prevented for non-empty albums
+- [x] T137 [US5] Write test: Positions reorder after photo deletion
 - [ ] T138 [US5] Write E2E test: Delete photo with confirmation (`tests/e2e/delete-photo.spec.js`)
 
 ---
