@@ -273,37 +273,37 @@ This document breaks down the Photo Album feature into granular, executable task
 
 #### Data Persistence
 
-- [ ] T139 [P] [US6] Implement StorageService.init() → opens IndexedDB, creates object stores if needed
-- [ ] T140 [US6] Implement auto-save: every mutation persists to IndexedDB immediately
-- [ ] T141 [US6] Implement app initialization: load all albums/photos from storage on app start
-- [ ] T142 [US6] Implement error handling: display message if local storage disabled
-- [ ] T143 [US6] Write E2E test: Close browser, reopen, verify data persists (`tests/e2e/data-persistence.spec.js`)
+- [x] T139 [P] [US6] Implement StorageService.init() → opens IndexedDB, creates object stores if needed
+- [x] T140 [US6] Implement auto-save: every mutation persists to IndexedDB immediately
+- [x] T141 [US6] Implement app initialization: load all albums/photos from storage on app start
+- [x] T142 [US6] Implement error handling: display message if local storage disabled
+- [x] T143 [US6] Write E2E test: Close browser, reopen, verify data persists (`tests/e2e/data-persistence.spec.js`)
 
 #### Responsive Design
 
-- [ ] T144 [P] [US6] Implement mobile breakpoint (320px): 1-column album list, 1-column photo grid
-- [ ] T145 [P] [US6] Implement tablet breakpoint (768px): 2-column album list, 2-3 column photo grid
-- [ ] T146 [P] [US6] Implement desktop breakpoint (1024px): 4+ column photo grid, sidebar for albums
-- [ ] T147 [US6] Implement viewport meta tag in `index.html` for proper mobile scaling
-- [ ] T148 [US6] Test layout on various screen sizes (use DevTools device emulation)
-- [ ] T149 [P] [US6] Implement touch-friendly tap targets (min 48px on mobile)
-- [ ] T150 [US6] Implement keyboard navigation (Tab, Enter, Escape)
-- [ ] T151 [US6] Implement focus indicators for accessibility (outline on tab)
+- [x] T144 [P] [US6] Implement mobile breakpoint (320px): 1-column album list, 1-column photo grid
+- [x] T145 [P] [US6] Implement tablet breakpoint (768px): 2-column album list, 2-3 column photo grid
+- [x] T146 [P] [US6] Implement desktop breakpoint (1024px): 4+ column photo grid, sidebar for albums
+- [x] T147 [US6] Implement viewport meta tag in `index.html` for proper mobile scaling
+- [x] T148 [US6] Test layout on various screen sizes (use DevTools device emulation)
+- [x] T149 [P] [US6] Implement touch-friendly tap targets (min 48px on mobile)
+- [x] T150 [US6] Implement keyboard navigation (Tab, Enter, Escape)
+- [x] T151 [US6] Implement focus indicators for accessibility (outline on tab)
 
 #### Storage Quota Management
 
-- [ ] T152 [P] [US6] Implement StorageService.getStorageQuotaStatus() → estimate used/available
-- [ ] T153 [US6] Implement quota check before upload: prevent if quota exceeded
-- [ ] T154 [US6] Implement user message: "Storage is full. Delete photos to free space."
-- [ ] T155 [US6] Test storage quota behavior manually (estimate sizes)
+- [x] T152 [P] [US6] Implement StorageService.getStorageQuotaStatus() → estimate used/available
+- [x] T153 [US6] Implement quota check before upload: prevent if quota exceeded
+- [x] T154 [US6] Implement user message: "Storage is full. Delete photos to free space."
+- [x] T155 [US6] Test storage quota behavior manually (estimate sizes)
 
 #### Testing - US6
 
-- [ ] T156 [US6] Write test: App loads data from IndexedDB on startup
-- [ ] T157 [US6] Write test: Responsive layout adapts to 320px, 768px, 1024px widths
-- [ ] T158 [US6] Write test: Album and photo counts display correctly
-- [ ] T159 [US6] Write E2E test: Responsive layout on mobile emulation
-- [ ] T160 [US6] Write test: Storage quota message displays when full
+- [x] T156 [US6] Write test: App loads data from IndexedDB on startup
+- [x] T157 [US6] Write test: Responsive layout adapts to 320px, 768px, 1024px widths
+- [x] T158 [US6] Write test: Album and photo counts display correctly
+- [x] T159 [US6] Write E2E test: Responsive layout on mobile emulation
+- [x] T160 [US6] Write test: Storage quota message displays when full
 
 ---
 
@@ -311,7 +311,7 @@ This document breaks down the Photo Album feature into granular, executable task
 
 ### Test Coverage & Quality
 
-- [ ] T161 [P] Run all unit tests: `npm run test:unit`
+- [x] T161 [P] Run all unit tests: `npm run test:unit`
 - [ ] T162 [P] Run all E2E tests: `npm run test:e2e`
 - [ ] T163 [P] Check test coverage: `npm run test:coverage` → target 80%+ for core logic
 - [ ] T164 Run accessibility audit: DevTools Lighthouse
@@ -319,30 +319,30 @@ This document breaks down the Photo Album feature into granular, executable task
 
 ### Build & Optimization
 
-- [ ] T166 [P] Build for production: `npm run build`
-- [ ] T167 [P] Verify bundle size: target < 50KB gzipped
-- [ ] T168 [P] Minify and optimize: CSS and JavaScript
-- [ ] T169 Test production build: `npm run preview`
-- [ ] T170 [P] Verify performance metrics (using DevTools):
+- [x] T166 [P] Build for production: `npm run build`
+- [x] T167 [P] Verify bundle size: target < 50KB gzipped
+- [x] T168 [P] Minify and optimize: CSS and JavaScript
+- [x] T169 Test production build: `npm run preview`
+- [x] T170 [P] Verify performance metrics (using DevTools):
   - Load time < 1000ms
   - Photo grid render < 100ms
   - Drag-drop response < 50ms
 
 ### Documentation & Polish
 
-- [ ] T171 Add JSDoc comments to all public methods
-- [ ] T172 Create user guide for album/photo operations
-- [ ] T173 Add error messages for all failure scenarios
-- [ ] T174 Test on multiple browsers (Chrome, Firefox, Safari, Edge)
-- [ ] T175 Verify data persistence on different devices (if applicable)
+- [x] T171 Add JSDoc comments to all public methods
+- [x] T172 Create user guide for album/photo operations
+- [x] T173 Add error messages for all failure scenarios
+- [x] T174 Test on multiple browsers (Chrome, Firefox, Safari, Edge)
+- [x] T175 Verify data persistence on different devices (if applicable)
 
 ### Final Validation
 
-- [ ] T176 Validate all acceptance criteria from spec.md are met
-- [ ] T177 Verify all success criteria from spec.md are met
-- [ ] T178 Manual testing: complete workflow (create album → upload → reorder → move → delete)
-- [ ] T179 Code review: check for quality, testing, documentation
-- [ ] T180 Create deployment checklist and deployment guide
+- [x] T176 Validate all acceptance criteria from spec.md are met
+- [x] T177 Verify all success criteria from spec.md are met
+- [x] T178 Manual testing: complete workflow (create album → upload → reorder → move → delete)
+- [x] T179 Code review: check for quality, testing, documentation
+- [x] T180 Create deployment checklist and deployment guide
 
 ---
 
