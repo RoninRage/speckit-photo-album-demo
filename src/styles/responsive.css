@@ -1,0 +1,252 @@
+/* Responsive Design Breakpoints */
+
+/* Mobile First (320px base) - default in index.css */
+
+/* Small devices (480px and up) */
+@media (min-width: 480px) {
+  #app-main {
+    padding: var(--space-6);
+  }
+
+  .modal {
+    width: 95%;
+  }
+
+  button {
+    min-height: 44px; /* Touch target */
+  }
+}
+
+/* Tablets (768px and up) */
+@media (min-width: 768px) {
+  #app-header {
+    padding: var(--space-6) var(--space-8);
+  }
+
+  #app-main {
+    padding: var(--space-8);
+  }
+
+  .container {
+    padding: 0 var(--space-6);
+  }
+
+  #modal-container {
+    align-items: flex-start;
+    padding-top: var(--space-12);
+  }
+
+  .modal {
+    width: 500px;
+    max-width: 90vw;
+  }
+
+  #toast-container {
+    max-width: 450px;
+  }
+
+  /* Two column layout for album list + detail */
+  .app-layout {
+    display: flex;
+    gap: var(--space-6);
+  }
+
+  .album-list-container {
+    width: 250px;
+    flex-shrink: 0;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
+
+  .album-detail-container {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Photo grid: 2-3 columns on tablet */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-4);
+  }
+
+  /* Album list: more spacious */
+  .album-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-4);
+  }
+}
+
+/* Large devices / Desktop (1024px and up) */
+@media (min-width: 1024px) {
+  #app {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
+  }
+
+  #app-header {
+    grid-column: 1 / -1;
+  }
+
+  #app-main {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-8);
+    padding: var(--space-8);
+  }
+
+  .album-list-container {
+    width: auto;
+    max-height: unset;
+    border-right: 1px solid var(--color-border-light);
+    padding-right: var(--space-6);
+  }
+
+  .album-detail-container {
+    width: 100%;
+  }
+
+  /* Photo grid: 4+ columns on desktop */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-6);
+  }
+
+  /* Album list as vertical list on desktop */
+  .album-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .album-item {
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+  }
+
+  .album-item:hover {
+    background-color: var(--color-bg-secondary);
+  }
+
+  .album-item.active {
+    background-color: var(--color-primary);
+    color: white;
+  }
+
+  /* Larger typography on desktop */
+  body {
+    font-size: var(--font-size-base);
+  }
+
+  h1 {
+    font-size: var(--font-size-3xl);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* Extra large devices (1440px and up) */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1400px;
+  }
+
+  #app-main {
+    padding: var(--space-10) var(--space-12);
+  }
+
+  /* Photo grid: larger tiles */
+  .photo-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+/* Print styles */
+@media print {
+  #app-header,
+  #modal-container,
+  #toast-container,
+  button,
+  input,
+  textarea {
+    display: none;
+  }
+
+  .album-item {
+    page-break-inside: avoid;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+  :root {
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  button {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Small screens (landscape orientation) */
+@media (max-height: 500px) and (orientation: landscape) {
+  #app-header {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  #app-header h1 {
+    font-size: var(--font-size-xl);
+  }
+
+  #app-main {
+    padding: var(--space-3);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  button,
+  input[type="checkbox"],
+  input[type="radio"],
+  .album-item,
+  .photo-tile {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  /* Remove hover effects on touch devices */
+  a:hover,
+  button:hover,
+  .album-item:hover {
+    background-color: inherit;
+    color: inherit;
+  }
+
+  /* Add active state for feedback */
+  a:active,
+  button:active,
+  .album-item:active {
+    opacity: 0.7;
+  }
+}
