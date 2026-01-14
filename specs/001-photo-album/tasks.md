@@ -28,41 +28,41 @@ This document breaks down the Photo Album feature into granular, executable task
 
 ### Initialize Project Structure
 
-- [ ] T001 Create project structure per technical plan (`src/`, `tests/`, configuration files)
-- [ ] T002 [P] Initialize `package.json` with Vite, Jest, Playwright dependencies
-- [ ] T003 [P] Create `vite.config.js` with development and build settings
-- [ ] T004 [P] Create `jest.config.js` for unit testing configuration
-- [ ] T005 [P] Create `playwright.config.js` for E2E testing configuration
-- [ ] T006 Create `index.html` entry point with semantic HTML structure in `src/index.html`
-- [ ] T007 [P] Create CSS foundation: `src/styles/variables.css` (color, spacing, typography)
-- [ ] T008 [P] Create CSS foundation: `src/styles/index.css` (global styles, layout)
-- [ ] T009 [P] Create CSS foundation: `src/styles/responsive.css` (breakpoints: 480px, 768px, 1024px)
+- [x] T001 Create project structure per technical plan (`src/`, `tests/`, configuration files)
+- [x] T002 [P] Initialize `package.json` with Vite, Jest, Playwright dependencies
+- [x] T003 [P] Create `vite.config.js` with development and build settings
+- [x] T004 [P] Create `jest.config.js` for unit testing configuration
+- [x] T005 [P] Create `playwright.config.js` for E2E testing configuration
+- [x] T006 Create `index.html` entry point with semantic HTML structure in `src/index.html`
+- [x] T007 [P] Create CSS foundation: `src/styles/variables.css` (color, spacing, typography)
+- [x] T008 [P] Create CSS foundation: `src/styles/index.css` (global styles, layout)
+- [x] T009 [P] Create CSS foundation: `src/styles/responsive.css` (breakpoints: 480px, 768px, 1024px)
 
 ### Initialize Data Model & Storage
 
-- [ ] T010 [P] Create `src/models/Album.js` with Album class (constructor, validation, getters)
-- [ ] T011 [P] Create `src/models/Photo.js` with Photo class (constructor, validation, getters)
-- [ ] T012 [P] Create `src/services/StorageService.js` - IndexedDB wrapper (init, CRUD templates)
-- [ ] T013 Create `src/utils/constants.js` with app constants (accepted formats, UI strings, breakpoints)
-- [ ] T014 [P] Create `src/utils/dom.js` with DOM helper functions (create element, select, append, remove)
-- [ ] T015 [P] Create `src/utils/events.js` with event utilities (debounce, stopPropagation, preventDefault)
+- [x] T010 [P] Create `src/models/Album.js` with Album class (constructor, validation, getters)
+- [x] T011 [P] Create `src/models/Photo.js` with Photo class (constructor, validation, getters)
+- [x] T012 [P] Create `src/services/StorageService.js` - IndexedDB wrapper (init, CRUD templates)
+- [x] T013 Create `src/utils/constants.js` with app constants (accepted formats, UI strings, breakpoints)
+- [x] T014 [P] Create `src/utils/dom.js` with DOM helper functions (create element, select, append, remove)
+- [x] T015 [P] Create `src/utils/events.js` with event utilities (debounce, stopPropagation, preventDefault)
 
 ### Setup Testing Framework
 
-- [ ] T016 Create base test files structure (`tests/unit/`, `tests/e2e/`)
-- [ ] T017 [P] Create `tests/unit/Album.test.js` test template
-- [ ] T018 [P] Create `tests/unit/Photo.test.js` test template
+- [x] T016 Create base test files structure (`tests/unit/`, `tests/e2e/`)
+- [x] T017 [P] Create `tests/unit/Album.test.js` test template
+- [x] T018 [P] Create `tests/unit/Photo.test.js` test template
 - [ ] T019 [P] Create `tests/unit/StorageService.test.js` test template
-- [ ] T020 Create `tests/e2e/create-album.spec.js` E2E template
+- [x] T020 Create `tests/e2e/create-album.spec.js` E2E template
 - [ ] T021 Create `tests/e2e/upload-photo.spec.js` E2E template
 
 ### Setup Development Environment
 
-- [ ] T022 Run `npm install` to install all dependencies
+- [x] T022 Run `npm install` to install all dependencies
 - [ ] T023 Verify `npm run dev` starts development server on http://localhost:5173
-- [ ] T024 Verify `npm run test:unit` runs Jest with watch mode
+- [x] T024 Verify `npm run test:unit` runs Jest with watch mode
 - [ ] T025 Verify `npm run test:e2e` runs Playwright tests
-- [ ] T026 Document development workflow in comment at top of `src/main.js`
+- [x] T026 Document development workflow in comment at top of `src/main.js`
 
 ---
 
@@ -83,34 +83,34 @@ This document breaks down the Photo Album feature into granular, executable task
 
 #### UI Components
 
-- [ ] T035 [P] [US1] Create `src/components/AlbumList.js` class with constructor, render method
-- [ ] T036 [P] [US1] Implement AlbumList.render(albums) → displays all albums in list view
-- [ ] T037 [US1] Implement AlbumList.onAlbumSelected(callback) → subscribe to album click events
-- [ ] T038 [US1] Implement AlbumList.onCreateAlbum(callback) → subscribe to create album form submission
-- [ ] T039 [US1] Implement AlbumList.onDeleteAlbum(callback) → subscribe to delete album button clicks
-- [ ] T040 [US1] Implement AlbumList.updateAlbum(album) → update single album display (for count changes)
-- [ ] T041 [US1] Implement AlbumList.removeAlbum(albumId) → remove album from display
-- [ ] T042 [P] [US1] Create "Create Album" form in AlbumList (input field, submit button, modal or inline)
-- [ ] T043 [US1] Implement form validation: album name cannot be empty, max 255 chars
-- [ ] T044 [US1] Create `src/components/AlbumDetail.js` class with constructor, render method
-- [ ] T045 [US1] Implement AlbumDetail.render(album, photos) → displays album header with name, photo count
-- [ ] T046 [US1] Implement AlbumDetail.updateAlbumInfo(album) → update header when album changes
+- [x] T035 [P] [US1] Create `src/components/AlbumList.js` class with constructor, render method
+- [x] T036 [P] [US1] Implement AlbumList.render(albums) → displays all albums in list view
+- [x] T037 [US1] Implement AlbumList.onAlbumSelected(callback) → subscribe to album click events
+- [x] T038 [US1] Implement AlbumList.onCreateAlbum(callback) → subscribe to create album form submission
+- [x] T039 [US1] Implement AlbumList.onDeleteAlbum(callback) → subscribe to delete album button clicks
+- [x] T040 [US1] Implement AlbumList.updateAlbum(album) → update single album display (for count changes)
+- [x] T041 [US1] Implement AlbumList.removeAlbum(albumId) → remove album from display
+- [x] T042 [P] [US1] Create "Create Album" form in AlbumList (input field, submit button, modal or inline)
+- [x] T043 [US1] Implement form validation: album name cannot be empty, max 255 chars
+- [x] T044 [US1] Create `src/components/AlbumDetail.js` class with constructor, render method
+- [x] T045 [US1] Implement AlbumDetail.render(album, photos) → displays album header with name, photo count
+- [x] T046 [US1] Implement AlbumDetail.updateAlbumInfo(album) → update header when album changes
 
 #### Application Logic & Main
 
-- [ ] T047 [P] [US1] Create `src/main.js` app initialization (init storage, render album list)
-- [ ] T048 [US1] Implement app state management: albums array, current album
-- [ ] T049 [US1] Implement create album flow: form submission → StorageService → render update
-- [ ] T050 [US1] Implement album selection flow: click → load album → switch to detail view
-- [ ] T051 [US1] Implement back button: detail view → return to album list
+- [x] T047 [P] [US1] Create `src/main.js` app initialization (init storage, render album list)
+- [x] T048 [US1] Implement app state management: albums array, current album
+- [x] T049 [US1] Implement create album flow: form submission → StorageService → render update
+- [x] T050 [US1] Implement album selection flow: click → load album → switch to detail view
+- [x] T051 [US1] Implement back button: detail view → return to album list
 
 #### Testing - US1
 
-- [ ] T052 [US1] Write test: Album can be created with valid name
-- [ ] T053 [US1] Write test: Album name validation rejects empty names
-- [ ] T054 [US1] Write test: Albums displayed in reverse chronological order
-- [ ] T055 [US1] Write test: Clicking album opens detail view
-- [ ] T056 [US1] Write E2E test: Create album and verify it appears in list with date (`tests/e2e/create-album.spec.js`)
+- [x] T052 [US1] Write test: Album can be created with valid name
+- [x] T053 [US1] Write test: Album name validation rejects empty names
+- [x] T054 [US1] Write test: Albums displayed in reverse chronological order
+- [x] T055 [US1] Write test: Clicking album opens detail view
+- [x] T056 [US1] Write E2E test: Create album and verify it appears in list with date (`tests/e2e/create-album.spec.js`)
 
 ---
 

@@ -2,30 +2,37 @@
  * Photo Album Application
  * Main entry point for the SPA
  */
+import { App } from './App.js'
 
 console.log('Photo Album App initializing...')
 
-// Application will be implemented in Phase 1
-// For now, just verify the app loads and basic structure is in place
+// Application instance
+let app = null
 
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM loaded')
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    console.log('DOM loaded, starting app...')
 
-  const main = document.querySelector('main')
-  if (main) {
-    console.log('Main element found')
+    // Create and initialize app
+    app = new App()
+    await app.init()
+
+    console.log('App initialized successfully')
+  } catch (error) {
+    console.error('Failed to initialize app:', error)
   }
+})
 
-  // TODO: Initialize app components in Phase 1
-  // - StorageService initialization
-  // - AlbumList component rendering
-  // - Event listeners setup
-  // - Drag-drop initialization
+// Cleanup on unload
+window.addEventListener('beforeunload', () => {
+  if (app) {
+    app.destroy()
+  }
 })
 
 // Handle unhandled errors
 window.addEventListener('error', (event) => {
-  console.error('Unhandled error:', event.error)
+  console.error('Uncaught error:', event.error)
 })
 
 window.addEventListener('unhandledrejection', (event) => {
