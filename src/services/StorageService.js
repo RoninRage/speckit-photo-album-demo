@@ -370,6 +370,24 @@ export class StorageService {
           photo.position = countRequest.result
           photoStore.put(photo)
 
+          // Reorder source album photos after removal
+          if (oldAlbumId !== targetAlbumId) {
+            const oldAlbumRange = IDBKeyRange.bound([oldAlbumId, 0], [oldAlbumId, Number.MAX_SAFE_INTEGER])
+            const oldAlbumPhotosRequest = index.getAll(oldAlbumRange)
+
+            oldAlbumPhotosRequest.onsuccess = () => {
+              const oldAlbumPhotos = oldAlbumPhotosRequest.result
+              // Filter out the moved photo and reorder positions (0, 1, 2, ...)
+              oldAlbumPhotos
+                .filter(p => p.id !== photoId)
+                .sort((a, b) => a.position - b.position)
+                .forEach((p, idx) => {
+                  p.position = idx
+                  photoStore.put(p)
+                })
+            }
+          }
+
           // Update album counts
           const albumStore = tx.objectStore(STORE_ALBUMS)
 

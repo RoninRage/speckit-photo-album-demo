@@ -3,7 +3,7 @@
  * Displays album details and manages photos within an album
  */
 import { createElement, querySelector, clearChildren, addClass, removeClass } from '../utils/dom.js'
-import { on } from '../utils/events.js'
+import { on, debounce } from '../utils/events.js'
 import { DragDropService } from '../services/DragDropService.js'
 
 export class AlbumDetail {
@@ -15,7 +15,8 @@ export class AlbumDetail {
       onBack: null,
       onUploadPhoto: null,
       onPhotoSelected: null,
-      onPhotoReorder: null
+      onPhotoReorder: null,
+      onPhotoMove: null
     }
     this.cleanupFunctions = []
     this.dragDropService = new DragDropService()
@@ -318,6 +319,13 @@ export class AlbumDetail {
     const grid = querySelector('#photo-grid', this.container)
     if (!grid) return
 
+    // Create debounced reorder handler (max 50ms between calls)
+    const debouncedReorder = debounce((photoId, targetPosition) => {
+      if (this.listeners.onPhotoReorder) {
+        this.listeners.onPhotoReorder(photoId, targetPosition)
+      }
+    }, 50)
+
     // Make grid a drop zone
     const gridCleanup = this.dragDropService.makeDropZone(grid, {
       dropClass: 'grid-drag-over',
@@ -332,8 +340,8 @@ export class AlbumDetail {
         const targetPosition = parseInt(targetEl.dataset.position, 10)
 
         if (targetPhotoId && targetPhotoId !== this.draggedPhotoId) {
-          // Call reorder handler
-          this.listeners.onPhotoReorder(this.draggedPhotoId, targetPosition)
+          // Call debounced reorder handler
+          debouncedReorder(this.draggedPhotoId, targetPosition)
         }
 
         this.draggedPhotoId = null
@@ -391,6 +399,14 @@ export class AlbumDetail {
    */
   onPhotoReorder(callback) {
     this.listeners.onPhotoReorder = callback
+  }
+
+  /**
+   * Register photo move listener
+   * @param {Function} callback - Callback function (photoId, targetAlbumId)
+   */
+  onPhotoMove(callback) {
+    this.listeners.onPhotoMove = callback
   }
 
   /**

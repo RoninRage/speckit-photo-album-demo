@@ -191,7 +191,7 @@ This document breaks down the Photo Album feature into granular, executable task
 - [x] T100 [US3] Implement PhotoGrid.updatePhotoOrder(photos) → reorder tiles in grid
 - [x] T101 [US3] Implement PhotoGrid.setDragOverState(isOver) → visual feedback during drag
 - [x] T102 [US3] Add CSS for drag-over state (border highlight, background color)
-- [ ] T103 [US3] Implement debounce on drag-drop events (max frequency 50ms)
+- [x] T103 [US3] Implement debounce on drag-drop events (max frequency 50ms)
 
 #### Application Logic for Reordering
 
@@ -201,9 +201,9 @@ This document breaks down the Photo Album feature into granular, executable task
 
 #### Testing - US3
 
-- [ ] T107 [US3] Write test: Photo position updates on drag-drop
-- [ ] T108 [US3] Write test: Positions remain sequential (0, 1, 2) after reorder
-- [ ] T109 [US3] Write test: Reorder persists across page reload
+- [x] T107 [US3] Write test: Photo position updates on drag-drop
+- [x] T108 [US3] Write test: Positions remain sequential (0, 1, 2) after reorder
+- [x] T109 [US3] Write test: Reorder persists across page reload
 - [ ] T110 [US3] Write E2E test: Drag photo, verify new order persists (`tests/e2e/reorder-photos.spec.js`)
 
 ---
@@ -212,10 +212,10 @@ This document breaks down the Photo Album feature into granular, executable task
 
 #### Data Model for Moving
 
-- [ ] T111 [P] [US4] Implement StorageService.movePhoto(photoId, sourceAlbumId, targetAlbumId) → atomic transaction
-- [ ] T112 [US4] Implement move logic: update photo.albumId, update both albums' photo counts
-- [ ] T113 [US4] Implement position assignment: moved photo gets position = targetAlbumPhotoCount
-- [ ] T114 [US4] Implement source album photo reordering after move (positions 0, 1, 2...)
+- [x] T111 [P] [US4] Implement StorageService.movePhoto(photoId, sourceAlbumId, targetAlbumId) → atomic transaction
+- [x] T112 [US4] Implement move logic: update photo.albumId, update both albums' photo counts
+- [x] T113 [US4] Implement position assignment: moved photo gets position = targetAlbumPhotoCount
+- [x] T114 [US4] Implement source album photo reordering after move (positions 0, 1, 2...)
 
 #### UI for Multi-Album Drag-Drop
 
@@ -225,15 +225,15 @@ This document breaks down the Photo Album feature into granular, executable task
 
 #### Application Logic for Moving
 
-- [ ] T118 [US4] Implement move flow: drag from album A → drop on album B → update → refresh both
-- [ ] T119 [US4] Implement validation: cannot move to same album
-- [ ] T120 [US4] Implement error handling for invalid moves
+- [x] T118 [US4] Implement move flow: drag from album A → drop on album B → update → refresh both
+- [x] T119 [US4] Implement validation: cannot move to same album
+- [x] T120 [US4] Implement error handling for invalid moves
 
 #### Testing - US4
 
-- [ ] T121 [US4] Write test: Photo moves between albums with correct albumId update
-- [ ] T122 [US4] Write test: Photo counts update for both source and target albums
-- [ ] T123 [US4] Write test: Source album positions reorder after move
+- [x] T121 [US4] Write test: Photo moves between albums with correct albumId update
+- [x] T122 [US4] Write test: Photo counts update for both source and target albums
+- [x] T123 [US4] Write test: Source album positions reorder after move
 - [ ] T124 [US4] Write E2E test: Drag photo between albums (`tests/e2e/move-photos.spec.js`)
 
 ---

@@ -137,6 +137,10 @@ export class App {
       this.components.albumDetail.onPhotoReorder((photoId, newPosition) => {
         this.reorderPhotos(albumId, photoId, newPosition)
       })
+
+      this.components.albumDetail.onPhotoMove((photoId, targetAlbumId) => {
+        this.movePhotoToAlbum(albumId, photoId, targetAlbumId)
+      })
     } catch (error) {
       console.error('Failed to render album detail:', error)
       this.showError('Failed to load album')
@@ -341,6 +345,72 @@ export class App {
     } catch (error) {
       console.error('Failed to reorder photos:', error)
       this.showError('Failed to reorder photos')
+    }
+  }
+
+  /**
+   * Move photo to another album
+   * @private
+   * @param {string} sourceAlbumId - Source album ID
+   * @param {string} photoId - Photo ID to move
+   * @param {string} targetAlbumId - Target album ID
+   */
+  async movePhotoToAlbum(sourceAlbumId, photoId, targetAlbumId) {
+    try {
+      // Validate
+      if (sourceAlbumId === targetAlbumId) {
+        this.showError('Cannot move photo to same album')
+        return
+      }
+
+      const sourcePhotos = this.state.photos[sourceAlbumId]
+      if (!sourcePhotos) {
+        throw new Error('Source album photos not found')
+      }
+
+      const photoIndex = sourcePhotos.findIndex(p => p.id === photoId)
+      if (photoIndex === -1) {
+        throw new Error('Photo not found in source album')
+      }
+
+      const photo = sourcePhotos[photoIndex]
+
+      // Move in storage
+      await storageService.movePhoto(photoId, targetAlbumId)
+
+      // Update local state
+      sourcePhotos.splice(photoIndex, 1)
+      sourcePhotos.sort((a, b) => a.position - b.position)
+
+      // Update source album state
+      const sourceAlbum = this.state.albums.find(a => a.id === sourceAlbumId)
+      if (sourceAlbum) {
+        sourceAlbum.photoCount = Math.max(0, sourceAlbum.photoCount - 1)
+      }
+
+      // Update target album state
+      const targetAlbum = this.state.albums.find(a => a.id === targetAlbumId)
+      if (targetAlbum) {
+        targetAlbum.photoCount = (targetAlbum.photoCount || 0) + 1
+      }
+
+      // Initialize target album photos if needed
+      if (!this.state.photos[targetAlbumId]) {
+        this.state.photos[targetAlbumId] = []
+      }
+
+      // Add photo to target album
+      this.state.photos[targetAlbumId].push(photo)
+      this.state.photos[targetAlbumId].sort((a, b) => a.position - b.position)
+
+      // Update UI
+      this.components.albumDetail.updatePhotoOrder(sourcePhotos)
+      this.components.albumDetail.updateAlbumInfo(sourceAlbum)
+
+      this.showSuccess(`Photo moved to ${targetAlbum ? targetAlbum.name : 'album'}`)
+    } catch (error) {
+      console.error('Failed to move photo:', error)
+      this.showError('Failed to move photo')
     }
   }
 
